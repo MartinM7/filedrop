@@ -14,12 +14,12 @@ class FileController extends Controller
 
     public function index(Request $request)
     {
-        $object = Obj::with('children.objectable')->forCurrentTeam()->where('uuid', $request->get('uuid', Obj::forCurrentTeam()
+        $object = Obj::with('children.objectable', 'ancestorsAndSelf.objectable')->forCurrentTeam()->where('uuid', $request->get('uuid', Obj::forCurrentTeam()
                 ->whereNull('parent_id')->first()->uuid))->firstOrfail();
 
         return view('files', [
             'object' => $object,
-            'ancestors' => $object->ancestors
+            'ancestors' => $object->ancestorsAndSelf()->breadthFirst()->get()
         ]);
     }
 }

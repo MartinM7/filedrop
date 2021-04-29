@@ -19,15 +19,17 @@
                 <div class="py-2 px-3">
                     <div class="flex items-center">
                         @foreach($ancestors as $ancestor)
-                            <a href="" class="font-bold text-gray-400">
+                            <a href="{{ route('files', ['uuid' => $ancestor->uuid]) }}" class="font-bold text-gray-400">
                                 {{ $ancestor->objectable->name }}
                             </a>
 
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                 viewBox="0 0 36.5 60.5" enable-background="new 0 0 36.5 60.5" xml:space="preserve" fill="currentColor" class="text-gray-100 w-5 h-3 mx-1">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" fill="#3E3E3E" d="M7.8,3.8l26.6,26.5c0.3,0.3,0.3,0.8,0,1.2L7.8,58.1
-                                    c-0.3,0.2-0.7,0.2-1.1,0l-3.4-3.5l23.2-23.1c0.2-0.3,0.2-0.8,0-1.2L3.3,7.3l3.4-3.5C7,3.5,7.4,3.5,7.8,3.8L7.8,3.8z"/>
-                            </svg>
+                            @if(!$loop->last)
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                     viewBox="0 0 36.5 60.5" enable-background="new 0 0 36.5 60.5" xml:space="preserve" fill="currentColor" class="text-gray-100 w-5 h-3 mx-1">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#3E3E3E" d="M7.8,3.8l26.6,26.5c0.3,0.3,0.3,0.8,0,1.2L7.8,58.1
+                                        c-0.3,0.2-0.7,0.2-1.1,0l-3.4-3.5l23.2-23.1c0.2-0.3,0.2-0.8,0-1.2L3.3,7.3l3.4-3.5C7,3.5,7.4,3.5,7.8,3.8L7.8,3.8z"/>
+                                </svg>
+                            @endif
                         @endforeach
                     </div>
                 </div>
