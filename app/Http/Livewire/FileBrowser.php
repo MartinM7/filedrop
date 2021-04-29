@@ -26,6 +26,13 @@ class FileBrowser extends Component
         $object->objectable()->associate($this->currentTeam->folders()->create($this->newFolderState));
         $object->save();
 
+        $this->creatingNewFolder = false;
+
+        $this->newFolderState = [
+        'name' => ''
+        ];
+
+        $this->object = $this->object->fresh();
     }
 
     public function getCurrentTeamProperty()
