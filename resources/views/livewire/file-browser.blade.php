@@ -36,7 +36,7 @@
             </div>
         </div>
         @if($creatingNewFolder)
-            <div class="bg-white overflow-hidden shadow-md p-6 mt-1 hover:bg-blue-300">
+            <div class="bg-white overflow-hidden shadow-md p-6 mt-1 bg-blue-300">
                 <form class="flex items-center flex-wrap sm:flex-nowrap" wire:submit.prevent="createFolder">
                     <input type="text" class="w-full border-2 border-gray-300 h-12 sm:mr-3 mb-3 sm:mb-0" wire:model="newFolderState.name">
                     <div class="flex-none">
@@ -62,16 +62,30 @@
                             <svg xmlns="http://www.w3.org/2000/svg"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700 feather feather-folder w-7 h-7 mx-1"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                         @endif
 
-                        @if($child->objectable_type === 'folder')
-                            <a href="{{ route('files', ['uuid' => $child->uuid]) }}" class="font-bold text-lg text-blue-600">
-                                {{ $child->objectable->name }}
-                            </a>
-                        @endif
+                        @if($renamingObject === $child->id)
+                            <form class="flex items-center flex-wrap" wire:submit.prevent="renamingObject">
+                                <input type="text" class="w-full border-2 border-gray-300 h-12 sm:mr-3 mb-3 sm:mb-0" wire:model="renamingObjectState.name">
+                                <div class="">
+                                    <button type="submit" class="whitespace-nowrap bg-blue-600 h-12 px-6 text-white font-bold my-2 mr-2">
+                                        Umbenennen
+                                    </button>
+                                </div>
+                                <button wire:click="$set('renamingObject', null)" type="submit" class="bg-gray-200 h-12 px-6 font-bold">
+                                    Abbrechen
+                                </button>
+                            </form>
+                        @else
+                            @if($child->objectable_type === 'folder')
+                                <a href="{{ route('files', ['uuid' => $child->uuid]) }}" class="font-bold text-lg text-blue-600">
+                                    {{ $child->objectable->name }}
+                                </a>
+                            @endif
 
-                        @if($child->objectable_type === 'file')
-                            <a href="" class="font-bold text-lg text-blue-600">
-                                {{ $child->objectable->name }}
-                            </a>
+                            @if($child->objectable_type === 'file')
+                                <a href="" class="font-bold text-lg text-blue-600">
+                                    {{ $child->objectable->name }}
+                                </a>
+                            @endif
                         @endif
                     </div>
                     @if($child->objectable_type === 'file')
@@ -82,8 +96,12 @@
                     <div class="p-3">{{ $child->created_at }}</div>
                     <div class="p-3">
                         <div class="">
-                            <button class="mr-2 bg-gray-200 h-7 px-3">Umbennenen</button>
-                            <button class="text-white font-bold bg-red-600 h-7 px-3">Löschen</button>
+                            <button class="mr-2 bg-gray-200 h-7 px-3" wire:click="$set('renamingObject', {{$child->id}})">
+                                Umbennenen
+                            </button>
+                            <button class="text-white font-bold bg-red-600 h-7 px-3">
+                                Löschen
+                            </button>
                         </div>
                     </div>
                 </div>
